@@ -10,9 +10,30 @@ const dogs = {
 };
 
 const dogLinkCreator = (dogs) => {
+  let dogArray = [];
   for(let dog in dogs){
     let atag = document.createElement("a");
-    atag.textContent = dog.key;
+    atag.textContent = dog;
+    atag.href = dogs[dog];
+    console.log(atag)
+
+    let li = documet.createElement('li');
+    li.class = 'dog-link';
+    li.appendChild(atag);
+    console.log(li)
+    dogArray.push(li)
+  }
+  return dogArray
+}
+
+export function attachDogLinks() {
+  console.log(dogs)
+  const dogLinks = dogLinkCreator(dogs);
+  let ul = document.querySelector(".drop-down-dog-list");
+  for(let i = 0; i < dogLinks.length; i++){
+    ul.appendChild(dogLinks[i]);
   }
 }
+
+attachDogLinks()
 
