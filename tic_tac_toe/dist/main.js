@@ -9,6 +9,46 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "../../../W9D1/asteroids/src/asteroid.js":
+/*!***********************************************!*\
+  !*** ../../../W9D1/asteroids/src/asteroid.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const MovingObject = __webpack_require__(/*! ./moving_object */ \"../../../W9D1/asteroids/src/moving_object.js\");\nconst Util = __webpack_require__(/*! ./util */ \"../../../W9D1/asteroids/src/util.js\");\n\nconst DEFAULTS = {\n  COLOR: '#D3D3D3',\n  RADIUS: 10\n}\n\nfunction Asteroid(obj) {\n  let ast = {};\n  ast.color = DEFAULTS.COLOR;\n  ast.radius = DEFAULTS.RADIUS;\n  ast.pos = obj.pos;\n  ast.vel = Util.randomVec(5);\n  MovingObject.call(this, ast);  \n}\n\nUtil.inherits(Asteroid, MovingObject);\n\nmodule.exports = Asteroid;\n\n//# sourceURL=webpack://tic_tac_toe/../../../W9D1/asteroids/src/asteroid.js?");
+
+/***/ }),
+
+/***/ "../../../W9D1/asteroids/src/game.js":
+/*!*******************************************!*\
+  !*** ../../../W9D1/asteroids/src/game.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const Asteroid = __webpack_require__(/*! ./asteroid */ \"../../../W9D1/asteroids/src/asteroid.js\");\n\nconst DIM_X = 500;\nconst DIM_Y = 500;\nconst NUM_ASTEROIDS = 15;\n\nfunction Game() {\n  this.asteroids = [];\n  this.addAsteroids();\n  console.log(this.asteroids)\n}\n\nGame.prototype.addAsteroids = function() {\n  let count = 0;\n  while (count < NUM_ASTEROIDS) {\n    let newAsteroid = new Asteroid({pos: this.randomPosition()});\n    this.asteroids.push(newAsteroid);\n    count++;\n  }\n}\n\nGame.prototype.randomPosition = function() {\n  return [Math.random() * DIM_X, Math.random() * DIM_Y]\n}\n\nGame.prototype.draw = function(ctx) {\n  ctx.clearRect(0, 0, DIM_X, DIM_Y);\n  ctx.fillStyle = 'black'\n  ctx.fillRect(0, 0, 500, 500);\n  for (let asteroid of this.asteroids) {\n    asteroid.draw(ctx);\n  }\n}\n\nGame.prototype.moveObjects = function() {\n  for (let asteroid of this.asteroids) {\n    asteroid.move();\n  }\n}\n\nmodule.exports = Game;\n\n//# sourceURL=webpack://tic_tac_toe/../../../W9D1/asteroids/src/game.js?");
+
+/***/ }),
+
+/***/ "../../../W9D1/asteroids/src/moving_object.js":
+/*!****************************************************!*\
+  !*** ../../../W9D1/asteroids/src/moving_object.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+eval("function MovingObject(obj) {\n    this.pos = obj.pos;\n    this.vel = obj.vel;\n    this.radius = obj.radius;\n    this.color = obj.color;\n}\n\n  MovingObject.prototype.draw = function(ctx) {\n    ctx.beginPath();\n    ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2, true);\n    ctx.fillStyle = this.color;\n    ctx.fill();\n  }\n\n  MovingObject.prototype.move = function() {\n    this.pos[0] += this.vel[0]\n    this.pos[1] += this.vel[1]\n  }\n\n\nmodule.exports = MovingObject;\n\n//# sourceURL=webpack://tic_tac_toe/../../../W9D1/asteroids/src/moving_object.js?");
+
+/***/ }),
+
+/***/ "../../../W9D1/asteroids/src/util.js":
+/*!*******************************************!*\
+  !*** ../../../W9D1/asteroids/src/util.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+eval("const Util ={\n  inherits(childClass, parentClass) {\n    function Surrogate(){};\n    Surrogate.prototype = parentClass.prototype;\n    childClass.prototype = new Surrogate();\n    childClass.prototype.constructor = childClass;\n  },\n\n  randomVec(length) {\n    const deg = 2 * Math.PI * Math.random();\n    return Util.scale([Math.sin(deg), Math.cos(deg)], length);\n  },\n\n  scale(vec, m) {\n    return [vec[0] * m, vec[1] * m];\n  }\n};\n\nmodule.exports = Util;\n\n//# sourceURL=webpack://tic_tac_toe/../../../W9D1/asteroids/src/util.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -25,7 +65,7 @@ eval("const View =  __webpack_require__(/*! ./ttt-view.js */ \"./src/ttt-view.js
   \*************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const Board = __webpack_require__(/*! ../ttt_node/board.js */ \"./ttt_node/board.js\");\n\nlet ul = document.createElement(\"ul\");\nclass View {\n  constructor(game, el) {\n    this.game = game;\n    this.el = el;\n    this.setupBoard();\n    this.handleClick = this.handleClick.bind(this)\n    this.bindEvents();\n  }\n\n  setupBoard() {\n    const posSeqs = [\n      [0, 0], [0, 1], [0, 2],\n      [1, 0], [1, 1], [1, 2],\n      [2, 0], [2, 1], [2, 2],\n    ];\n    \n    this.el.appendChild(ul);\n\n    for(let i = 0; i < 9; i++){\n      let li = document.createElement(\"li\");\n      li.dataset.pos = posSeqs[i]\n      ul.appendChild(li);\n    }\n  }\n  \n  bindEvents() {\n    ul.addEventListener(\"click\", this.handleClick)\n  }\n\n  makeMove(square) {\n   \n    if(Board.isValidPos(square)){\n      // square.backgroundColor = 'white'\n      this.game.playMove(square);\n    } else {\n      alert(\"Invalid Move\")\n    }\n  }\n\n  handleClick(e) {\n    e.preventDefault();\n    e.stopPropagation();\n\n    let ele = e.target;\n    this.makeMove(ele.dataset.pos)\n  }\n\n}\n\nmodule.exports = View;\n\n\n//# sourceURL=webpack://tic_tac_toe/./src/ttt-view.js?");
+eval("const Game = __webpack_require__(/*! ../../../../W9D1/asteroids/src/game.js */ \"../../../W9D1/asteroids/src/game.js\");\nconst Board = __webpack_require__(/*! ../ttt_node/board.js */ \"./ttt_node/board.js\");\n\nlet ul = document.createElement(\"ul\");\nclass View {\n  constructor(game, el) {\n    this.game = game;\n    this.el = el;\n    this.setupBoard();\n    this.handleClick = this.handleClick.bind(this)\n    this.bindEvents();\n  }\n\n  setupBoard() {\n    const posSeqs = [\n      [0, 0], [0, 1], [0, 2],\n      [1, 0], [1, 1], [1, 2],\n      [2, 0], [2, 1], [2, 2],\n    ];\n    \n    this.el.appendChild(ul);\n\n    for(let i = 0; i < 9; i++){\n      let li = document.createElement(\"li\");\n      li.dataset.pos = posSeqs[i]\n      ul.appendChild(li);\n    }\n  }\n  \n  bindEvents() {\n    ul.addEventListener(\"click\", this.handleClick)\n  }\n\n  makeMove(square, e) {\n    if(Board.isValidPos(square)){\n      e.style.backgroundColor = 'aliceblue'\n      this.game.playMove(square);\n      let text = this.game.board.grid[square[0]][square[1]]\n      e.textContent = text\n    } else {\n      alert(\"Invalid Move\")\n    }\n\n    if(this.game.winner()){\n      alert(`${this.game.winner()} wins!`)\n      this.game = new Game()\n      window.location.reload()\n    }\n  }\n\n  handleClick(e) {\n    e.preventDefault();\n    e.stopPropagation();\n\n    let ele = e.target;\n    let arr = [+ele.dataset.pos[0], +ele.dataset.pos[2]]\n    this.makeMove(arr, ele)\n  }\n\n}\n\nmodule.exports = View;\n\n\n//# sourceURL=webpack://tic_tac_toe/./src/ttt-view.js?");
 
 /***/ }),
 

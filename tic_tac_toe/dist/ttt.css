@@ -6,10 +6,16 @@ ul {
 }
 
 li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: slategray;
     width: 98px;
     height: 98px;
     border: 1px solid black;
+    font-weight: bold;
+    font-size: 75px;
+
 }
 
 li:hover {
