@@ -15,7 +15,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const View =  __webpack_require__(/*! ./ttt-view.js */ \"./src/ttt-view.js\") // require appropriate file\nconst Game = __webpack_require__(/*! ../ttt_node/game.js */ \"./ttt_node/game.js\")// require appropriate file\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  const game = new Game()\n  const view = new View(game, document.querySelector('.ttt'))\n  console.log(hi)\n});\n\n\n//# sourceURL=webpack://tic_tac_toe/./src/index.js?");
+eval("const View =  __webpack_require__(/*! ./ttt-view.js */ \"./src/ttt-view.js\") // require appropriate file\nconst Game = __webpack_require__(/*! ../ttt_node/game.js */ \"./ttt_node/game.js\")// require appropriate file\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  const game = new Game()\n  const view = new View(game, document.querySelector('.ttt'))\n});\n\n\n//# sourceURL=webpack://tic_tac_toe/./src/index.js?");
 
 /***/ }),
 
@@ -23,9 +23,9 @@ eval("const View =  __webpack_require__(/*! ./ttt-view.js */ \"./src/ttt-view.js
 /*!*************************!*\
   !*** ./src/ttt-view.js ***!
   \*************************/
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("let ul = document.createElement(\"ul\");\nclass View {\n  constructor(game, el) {\n    this.game = game;\n    this.el = el\n    this.setupBoard()\n  }\n\n  setupBoard() {\n    const posSeqs = [\n      [0, 0], [0, 1], [0, 2],\n      [1, 0], [1, 1], [1, 2],\n      [2, 0], [2, 1], [2, 2],\n    ];\n    this.el.appendChild(ul);\n\n    for(let i = 0; i < 9; i++){\n      let li = document.createElement(\"li\");\n      li.dataset.pos = `${i}`\n      ul.appendChild(li);\n    }\n  }\n  \n  bindEvents() {\n    ul.addEventListener(\"click\", this.handleClick)\n  }\n\n  handleClick(e) {\n    e.preventDefault();\n    e.stopPropagation();\n\n    let ele = e.target;\n   \n    this.makeMove(ele.pos)\n  }\n\n  makeMove(square) {\n    if(this.game.board.isValidPos(square)){\n      square.backgroundColor = 'white'\n      this.game.playMove(square);\n    } else {\n      alert(\"Invalid Move\")\n    }\n  \n  }\n\n}\n\nmodule.exports = View;\n\n\n//# sourceURL=webpack://tic_tac_toe/./src/ttt-view.js?");
+eval("const Board = __webpack_require__(/*! ../ttt_node/board.js */ \"./ttt_node/board.js\");\n\nlet ul = document.createElement(\"ul\");\nclass View {\n  constructor(game, el) {\n    this.game = game;\n    this.el = el;\n    this.setupBoard();\n    this.handleClick = this.handleClick.bind(this)\n    this.bindEvents();\n  }\n\n  setupBoard() {\n    const posSeqs = [\n      [0, 0], [0, 1], [0, 2],\n      [1, 0], [1, 1], [1, 2],\n      [2, 0], [2, 1], [2, 2],\n    ];\n    \n    this.el.appendChild(ul);\n\n    for(let i = 0; i < 9; i++){\n      let li = document.createElement(\"li\");\n      li.dataset.pos = posSeqs[i]\n      ul.appendChild(li);\n    }\n  }\n  \n  bindEvents() {\n    ul.addEventListener(\"click\", this.handleClick)\n  }\n\n  makeMove(square) {\n   \n    if(Board.isValidPos(square)){\n      // square.backgroundColor = 'white'\n      this.game.playMove(square);\n    } else {\n      alert(\"Invalid Move\")\n    }\n  }\n\n  handleClick(e) {\n    e.preventDefault();\n    e.stopPropagation();\n\n    let ele = e.target;\n    this.makeMove(ele.dataset.pos)\n  }\n\n}\n\nmodule.exports = View;\n\n\n//# sourceURL=webpack://tic_tac_toe/./src/ttt-view.js?");
 
 /***/ }),
 
