@@ -1,3 +1,36 @@
+export default class Util{
+ 
+dogLinkCreator = (dogs) => {
+  let dogArray = [];
+  for(let dog in dogs){
+    let atag = document.createElement("a");
+    atag.textContent = dog;
+    atag.href = dogs[dog];
+
+    let li = document.createElement('li');
+    li.class = 'dog-link';
+    li.appendChild(atag);
+
+    dogArray.push(li)
+  }
+  return dogArray
+}
+
+attachDogLinks() {
+  const dogLinks = dogLinkCreator(dogs);
+  
+  for(let i = 0; i < dogLinks.length; i++){
+    ul.appendChild(dogLinks[i]);
+  }
+}
+
+handleEnter() {
+  nav.addEventListener("mouseenter", () =>{
+    ul.style.display = ""
+  })
+}
+}
+
 
 const dogs = {
   "Corgi": "https://www.akc.org/dog-breeds/cardigan-welsh-corgi/",
@@ -8,32 +41,9 @@ const dogs = {
   "Labrador Retriever": "https://www.akc.org/dog-breeds/labrador-retriever/",
   "French Bulldog": "https://www.akc.org/dog-breeds/french-bulldog/" 
 };
+const ul = document.querySelector(".drop-down-dog-list");
+const nav = document.querySelector(".drop-down-dog-nav")
 
-const dogLinkCreator = (dogs) => {
-  let dogArray = [];
-  for(let dog in dogs){
-    let atag = document.createElement("a");
-    atag.textContent = dog;
-    atag.href = dogs[dog];
-    console.log(atag)
+attachDogLinks();
 
-    let li = documet.createElement('li');
-    li.class = 'dog-link';
-    li.appendChild(atag);
-    console.log(li)
-    dogArray.push(li)
-  }
-  return dogArray
-}
-
-export function attachDogLinks() {
-  console.log(dogs)
-  const dogLinks = dogLinkCreator(dogs);
-  let ul = document.querySelector(".drop-down-dog-list");
-  for(let i = 0; i < dogLinks.length; i++){
-    ul.appendChild(dogLinks[i]);
-  }
-}
-
-attachDogLinks()
 

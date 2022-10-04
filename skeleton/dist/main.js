@@ -20,13 +20,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/drop_down.js":
+/*!**************************!*\
+  !*** ./src/drop_down.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Util)\n/* harmony export */ });\nclass Util{\n \ndogLinkCreator = (dogs) => {\n  let dogArray = [];\n  for(let dog in dogs){\n    let atag = document.createElement(\"a\");\n    atag.textContent = dog;\n    atag.href = dogs[dog];\n\n    let li = document.createElement('li');\n    li.class = 'dog-link';\n    li.appendChild(atag);\n\n    dogArray.push(li)\n  }\n  return dogArray\n}\n\nattachDogLinks() {\n  const dogLinks = dogLinkCreator(dogs);\n  \n  for(let i = 0; i < dogLinks.length; i++){\n    ul.appendChild(dogLinks[i]);\n  }\n}\n\nhandleEnter() {\n  nav.addEventListener(\"mouseenter\", () =>{\n    ul.style.display = \"\"\n  })\n}\n}\n\n\nconst dogs = {\n  \"Corgi\": \"https://www.akc.org/dog-breeds/cardigan-welsh-corgi/\",\n  \"Australian Shepherd\": \"https://www.akc.org/dog-breeds/australian-shepherd/\",\n  \"Affenpinscher\": \"https://www.akc.org/dog-breeds/affenpinscher/\",\n  \"American Staffordshire Terrier\": \"https://www.akc.org/dog-breeds/american-staffordshire-terrier/\",\n  \"Tosa\": \"https://www.akc.org/dog-breeds/tosa/\",\n  \"Labrador Retriever\": \"https://www.akc.org/dog-breeds/labrador-retriever/\",\n  \"French Bulldog\": \"https://www.akc.org/dog-breeds/french-bulldog/\" \n};\nconst ul = document.querySelector(\".drop-down-dog-list\");\nconst nav = document.querySelector(\".drop-down-dog-nav\")\n\nattachDogLinks();\n\n\n\n\n//# sourceURL=webpack://skeleton/./src/drop_down.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _warmup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./warmup */ \"./src/warmup.js\");\n/* harmony import */ var _clock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./clock */ \"./src/clock.js\");\n\n\n\n\n//# sourceURL=webpack://skeleton/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _warmup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./warmup */ \"./src/warmup.js\");\n/* harmony import */ var _clock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./clock */ \"./src/clock.js\");\n/* harmony import */ var _drop_down__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./drop_down */ \"./src/drop_down.js\");\n\n\n\n\n\n//# sourceURL=webpack://skeleton/./src/index.js?");
 
 /***/ }),
 
